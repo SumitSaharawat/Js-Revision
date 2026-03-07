@@ -1,4 +1,3 @@
-
 export let cart = JSON.parse(localStorage.getItem('cart'));
 
 if(!cart){
@@ -16,6 +15,7 @@ if(!cart){
 function saveToStorage(){
     localStorage.setItem('cart', JSON.stringify(cart));
 }
+
 export function updateCart(id){
     let matchingItem = cart.find(item => item.productId === id);
 
@@ -27,6 +27,8 @@ export function updateCart(id){
             quantity: 1
         });
     }
+
+    incrementCartItemsQuantity();
 
     saveToStorage();
 };
@@ -44,3 +46,30 @@ export function removeFromCart(id){
 
     saveToStorage();
 }
+
+export function updateCheckoutItems(productId, link){
+    const checkOutHeaderLink = document.querySelector(link);
+    const cartItem = cart.find(cartItem => cartItem.productId === productId);
+    const unit = decrementCartItemsQuantity(cartItem.quantity) === 1 ? 'item' : 'items';
+    decrementCartItemsQuantity(cartItem.quantity);
+    checkOutHeaderLink.innerHTML = `${decrementCartItemsQuantity(cartItem.quantity)} ${unit}`;
+};
+
+export function incrementCartItemsQuantity(){
+    let count = 0;
+    cart.forEach((item) => {
+        count += item.quantity;
+    })
+
+    return count;
+};
+
+export function decrementCartItemsQuantity(quantity){
+    let count = 0;
+    cart.forEach((item) => {
+        count += item.quantity;
+    })
+
+    count -= quantity;
+    return count;
+};

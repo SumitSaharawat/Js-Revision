@@ -2,7 +2,6 @@ import { products } from '../data/products.js';
 import { cart, updateCart } from '../data/cart.js';
 import { formatCurrency } from './utils/money.js';
 
-
 let productsHTML = ''; 
 
 products.forEach((product) => {
@@ -44,10 +43,10 @@ addToCartBtn.forEach((button) => {
         const productId = button.dataset.productId;
         updateCart(productId);
         updateCartQuantity();
-        console.log(cart);
     })
 });
 
 function updateCartQuantity(){
-     document.querySelector('.cart-quantity').innerHTML = ++cartQuantity;
+    document.querySelector('.cart-quantity').innerHTML = ++cartQuantity;
+    
 }

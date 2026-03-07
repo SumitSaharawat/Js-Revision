@@ -1,6 +1,8 @@
-import { cart, removeFromCart } from '../data/cart.js';
+import { cart, removeFromCart, incrementCartItemsQuantity, updateCheckoutItems } from '../data/cart.js';
 import { products } from '../data/products.js';
 import { formatCurrency } from './utils/money.js';
+
+console.log(dayjs());
 
 let checkoutHTML = '';
 
@@ -88,13 +90,20 @@ cart.forEach((cartItem) => {
 
 document.querySelector('.order-summary').innerHTML = checkoutHTML;
 
+const checkOutHeaderLink = document.querySelector('.return-to-home-link');
+const unit = incrementCartItemsQuantity() === 1 ? 'item' : 'items';
+checkOutHeaderLink.innerHTML = `${incrementCartItemsQuantity()} ${unit}`;
+
+
 let deleteItem = document.querySelectorAll('.delete-quantity-link');
 
 deleteItem.forEach((item) => {
   item.addEventListener('click', () => {
     let productId = item.dataset.productId;
+
+    updateCheckoutItems(productId, '.return-to-home-link');
     removeFromCart(productId);
-    
+
     let productHTML = document.querySelector(`.js-container-${productId}`);
     productHTML.remove();
   })
