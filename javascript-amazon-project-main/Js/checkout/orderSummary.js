@@ -1,9 +1,10 @@
-import { cart, removeFromCart, incrementCartItemsQuantity, updateCheckoutItems, updateDeliveryOption } from '../../data/cart.js';
-import { products, getProduct } from '../../data/products.js';
+import { cart, removeFromCart, updateDeliveryOption } from '../../data/cart.js';
+import { products } from '../../data/products.js';
 import { formatCurrency } from '../utils/money.js';
 import dayjs from 'https://unpkg.com/supersimpledev@8.5.0/dayjs/esm/index.js';
 import { deliveryOptions, getDeliveryOption } from '../../data/deliveryOptions.js';
 import { renderPaymentSummary } from './paymentSummary.js';
+import { renderCheckoutHeader } from './checkOutHeader.js';
 
 export function renderOrderSummary(){
   let checkoutHTML = '';
@@ -63,10 +64,6 @@ export function renderOrderSummary(){
 
   document.querySelector('.order-summary').innerHTML = checkoutHTML;
 
-  const checkOutHeaderLink = document.querySelector('.return-to-home-link');
-  const unit = incrementCartItemsQuantity() === 1 ? 'item' : 'items';
-  checkOutHeaderLink.innerHTML = `${incrementCartItemsQuantity()} ${unit}`;
-
 
   let deleteItem = document.querySelectorAll('.delete-quantity-link');
 
@@ -74,13 +71,12 @@ export function renderOrderSummary(){
     item.addEventListener('click', () => {
       let productId = item.dataset.productId;
 
-      updateCheckoutItems(productId, '.return-to-home-link');
-      updateCheckoutItems(productId, '.summary-items');
       removeFromCart(productId);
 
       let productHTML = document.querySelector(`.js-container-${productId}`);
       productHTML.remove();
       renderPaymentSummary();
+      renderCheckoutHeader();
       
     })
   });

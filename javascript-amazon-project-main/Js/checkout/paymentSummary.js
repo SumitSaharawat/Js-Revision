@@ -1,12 +1,11 @@
-import { cart, decrementCartItemsQuantity } from "../../data/cart.js";
-import { products, getProduct } from "../../data/products.js";
+import { cart } from "../../data/cart.js";
+import { products } from "../../data/products.js";
 import { formatCurrency } from "../utils/money.js";
 import { getDeliveryOption } from "../../data/deliveryOptions.js";
 
 export function renderPaymentSummary(){
     let productPriceCents = 0;
     let shippingPriceCents = 0;
-    let html = '' ;
     let quantity = 0;
 
     cart.forEach((cartItem) => {

@@ -55,15 +55,6 @@ export function removeFromCart(id){
     saveToStorage();
 }
 
-//Decrement the chekout items number if a item is deleted from the cart
-export function updateCheckoutItems(productId, link){
-    const checkOutHeaderLink = document.querySelector(link);
-    const cartItem = cart.find(cartItem => cartItem.productId === productId);
-    const unit = decrementCartItemsQuantity(cartItem.quantity) === 1 ? 'item' : 'items';
-    decrementCartItemsQuantity(cartItem.quantity);
-    checkOutHeaderLink.innerHTML = `${decrementCartItemsQuantity(cartItem.quantity)} ${unit}`;
-};
-
 //Helper function to keep track of number of items added in a cart & returning number of items
 export function incrementCartItemsQuantity(){
     let count = 0;
@@ -71,17 +62,6 @@ export function incrementCartItemsQuantity(){
         count += item.quantity;
     })
 
-    return count;
-};
-
-//Helper function to keep track of number of items deleted in a cart & returning number of items remianing
-export function decrementCartItemsQuantity(quantity){
-    let count = 0;
-    cart.forEach((item) => {
-        count += item.quantity;
-    })
-
-    count -= quantity;
     return count;
 };
 
