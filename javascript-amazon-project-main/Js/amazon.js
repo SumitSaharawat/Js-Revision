@@ -48,5 +48,4 @@ addToCartBtn.forEach((button) => {
 
 function updateCartQuantity(){
     document.querySelector('.cart-quantity').innerHTML = ++cartQuantity;
-    
 }
